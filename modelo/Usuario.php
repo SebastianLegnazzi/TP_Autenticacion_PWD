@@ -124,6 +124,25 @@ class Usuario
 	/************** FUNCIONES *************/
 	/**************************************/
 
+	public function __construct()
+	{
+		$this->id = "";
+		$this->nombre = "";
+		$this->pass = "";
+		$this->mail = "";
+		$this->deshabilitado = "";
+		$this->mensajeFuncion = "";
+	}
+
+	public function cargar($id, $nombre, $pass, $mail, $deshabilitado)
+	{
+		$this->id = $id;
+		$this->nombre = $nombre;
+		$this->pass = $pass;
+		$this->mail = $mail;
+		$this->deshabilitado = $deshabilitado;
+	}
+
 	public function insertar()
 	{
 		$base = new BaseDatos();

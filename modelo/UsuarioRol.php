@@ -6,8 +6,8 @@
  */
 class UsuarioRol
 {
-	private $idUsuario;
-	private $idRol;
+	private $ojbUsuario;
+	private $objRol;
 	private $mensajeFuncion;
 
 	/**************************************/
@@ -17,15 +17,15 @@ class UsuarioRol
 	/**
 	 * Establece el valor de idUsuario
 	 */ 
-	public function setIdUsuario($idUsuario){
-		$this->idUsuario = $idUsuario;
+	public function setOjbUsuario($ojbUsuario){
+		$this->ojbUsuario = $ojbUsuario;
 	}
 
 	/**
 	 * Establece el valor de idRol
 	 */ 
-	public function setIdRol($idRol){
-		$this->idRol = $idRol;
+	public function setObjRol($objRol){
+		$this->objRol = $objRol;
 	}
 
 	public function setMensajeFuncion($mensajeFuncion)
@@ -40,15 +40,15 @@ class UsuarioRol
 	/**
 	 * Obtiene el valor de idUsuario
 	 */ 
-	public function getIdUsuario(){
-		return $this->idUsuario;
+	public function getOjbUsuario(){
+		return $this->ojbUsuario;
 	}
 
 	/**
 	 * Obtiene el valor de idRol
 	 */ 
-	public function getIdRol(){
-		return $this->idRol;
+	public function getObjRol(){
+		return $this->objRol;
 	}
 	
 	public function getMensajeFuncion()
@@ -62,14 +62,17 @@ class UsuarioRol
 
 	public function __construct()
 	{
-		$this->idRol = "";
-		$this->idUsuario = "";
+		$this->objRol = new Rol;
+		$this->ojbUsuario = new Usuario;
 	}
 
 	public function cargar($idRol, $idUsuario)
 	{
-		$this->idRol = $idRol;
-		$this->idUsuario = $idUsuario;
+		$resp = false;
+		if($this->objRol->Buscar($idRol) && $this->ojbUsuario->Buscar($idUsuario)){
+			$resp = true;
+		}
+		return $resp;
 	}
 
 	public function insertar()
@@ -77,8 +80,8 @@ class UsuarioRol
 		$base = new BaseDatos();
 		$resp = false;
 		$consulta = "INSERT INTO rol (idrol, idUsuario) VALUES (
-        " . $this->getIdRol() . ",
-		'" . $this->getIdUsuario() . "')";
+        " . $this->getObjRol()->getRol(). ",
+		'" . $this->getOjbUsuario()->getId(). "')";
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consulta)) {
 				$resp =  true;
@@ -122,7 +125,7 @@ class UsuarioRol
 		$base = new BaseDatos();
 		$resp = false;
 		if ($base->Iniciar()) {
-			$consulta = "DELETE FROM usuariorol WHERE idusuario= '". $this->getIdRol()."' AND idrol= '" . $this->getIdUsuario()."'";
+			$consulta = "DELETE FROM usuariorol WHERE idusuario= '". $this->getObjRol()->getRol()."' AND idrol= '" . $this->getOjbUsuario()->getId()."'";
 			if ($base->Ejecutar($consulta)) {
 				$resp =  true;
 			} else {
@@ -136,8 +139,8 @@ class UsuarioRol
 
 	public function __toString()
 	{
-		return ("El id del usuario es: " . $this->getIdRol() .
-			"\n El id del rol es: " . $this->getIdUsuario() . "\n");
+		return ("El id del usuario es: " .$this->getObjRol()->getRol().
+			"\n El id del rol es: " . $this->getOjbUsuario()->getId() . "\n");
 	}
 
 }
