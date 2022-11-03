@@ -189,12 +189,12 @@ class Usuario
 	}
 
 	/*
-	 Función que busca una auto en base a un ID
+	 Función que busca una auto en base a un usuario
 	*/
-	public function Buscar($id)
+	public function Buscar($usuario)
 	{
 		$base = new BaseDatos();
-		$consulta = "SELECT * FROM usuario WHERE idusuario='" . $id . "'";
+		$consulta = "SELECT * FROM usuario WHERE usnombre='" . $usuario . "'";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consulta)) {

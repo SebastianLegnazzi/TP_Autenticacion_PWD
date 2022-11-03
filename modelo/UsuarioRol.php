@@ -62,8 +62,8 @@ class UsuarioRol
 
 	public function __construct()
 	{
-		$this->objRol = new Rol;
-		$this->ojbUsuario = new Usuario;
+		$this->objRol = new Rol();
+		$this->ojbUsuario = new Usuario();
 	}
 
 	public function cargar($idRol, $idUsuario)

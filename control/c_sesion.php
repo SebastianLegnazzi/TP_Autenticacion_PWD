@@ -2,28 +2,12 @@
 
 class c_sesion{
 
-    private $nombreUsuario;                         // consultar *1
-    private $pass;
-    private $objUsuario;                           // CONSULTAR *5
+    private $objUsuario;       
 
 
 /**************************************/
 /**************** SET *****************/
 /**************************************/
-
-    /**
-     * Establece el valor de nombreUsuario
-     */ 
-    public function setNombreUsuario($nombreUsuario){
-        $this->nombreUsuario = $nombreUsuario;
-    }
-
-    /**
-     * Establece el valor de pass
-     */ 
-    public function setPass($pass){
-        $this->pass = $pass;
-    }
 
     /**
      * Establece el valor de objUsuario
@@ -35,20 +19,6 @@ class c_sesion{
 /**************************************/
 /**************** GET *****************/
 /**************************************/
-
-    /**
-     * Obtiene el valor de nombreUsuario
-     */ 
-    public function getNombreUsuario(){
-        return $this->nombreUsuario;
-    }
-
-    /**
-     * Obtiene el valor de pass
-     */ 
-    public function getPass(){
-        return $this->pass;
-    }
 
         /**
      * Obtiene el valor de objUsuario
@@ -62,32 +32,25 @@ class c_sesion{
 /**************************************/
 
     public function __construct(){
-       $this->nombreUsuario = "";
-       $this->pass = "";
+        session_start();
        $this->objUsuario = null;
-       session_start();
     }
 
-    public function iniciar($nombreUsuario, $pass){
-        $this->setNombreUsuario($nombreUsuario);
-        $this->setPass($pass);
-        $_SESSION["nombreUsuario"]= $this->getNombreUsuario();
-        $_SESSION["pass"]= $this->getPass();
+    private function iniciar($nombreUsuario, $arrayRoles){
+        $_SESSION["nombreUsuario"] = $nombreUsuario;
+        $_SESSION["roles"] = $arrayRoles;
     }
 
-    public function validar(){                                          // CONSULTAR *2 y *3
+    public function validar($usuario, $pass){
         $objUsuarios = new c_usuario();
-        $arrayUsuario = $objUsuarios->buscar();
-        $i = 0;
+        $arrayUsuario = $objUsuarios->buscar($usuario);
         $resp = false;
-        if(count($arrayUsuario) >= 1){
-            while(!$resp && $i > count($arrayUsuario)){
-                if($_SESSION["pass"] == $arrayUsuario[$i]->getPass() && $_SESSION["nombreUsuario"] == $arrayUsuario[$i]->getNombre()){
-                    $resp = true;
-                    $this->setObjUsuario($arrayUsuario[$i]);
-                }else{
-                    $i++;
-                }
+        if(count($arrayUsuario) == 1){
+            if($pass == $arrayUsuario[0]->getPass()){
+                $this->setObjUsuario($arrayUsuario[0]);
+                $arrayRoles = $this->getRol();
+                $this->iniciar($usuario, $arrayRoles);
+                $resp = true;
             }
         }
         return $resp;
@@ -95,7 +58,7 @@ class c_sesion{
 
     public function activa(){
         $resp = false;
-        if($this->getObjUsuario() != null){                                                    // CONSULTAR *5
+        if($this->getObjUsuario() != null){                      
             $resp = true;
         }
         return $resp;
@@ -103,16 +66,17 @@ class c_sesion{
 
     public function getUsuario(){
         $resp = null;
-        if($this->getObjUsuario() != null){                                                    // CONSULTAR *5
+        if($this->getObjUsuario() != null){
             $resp = $this->getObjUsuario()->getNombre();
         }
         return $resp;
     }
 
     public function getRol(){
+        $arrayRolesUsuario = null;
         if($this->getObjUsuario() != null){
             $objUsuarioRol = new c_usuarioRol();
-            $arrayRolesUsuario = $objUsuarioRol->buscar($this->getObjUsuario()->getId());     //CONSULTAR *4
+            $arrayRolesUsuario = $objUsuarioRol->buscar($this->getObjUsuario()->getId());
         }
         return $arrayRolesUsuario;
     }

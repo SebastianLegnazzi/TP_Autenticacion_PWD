@@ -15,7 +15,11 @@ class c_usuario
 
         if (array_key_exists('idusuario', $param) and array_key_exists('usnombre', $param) and array_key_exists('uspass', $param) and array_key_exists('usmail', $param) and array_key_exists('usdeshabilitado', $param)) {
             $objUsuario = new Usuario();
-            if(!$objUsuario->cargar($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado'])){
+            if(!$objUsuario->Buscar($param["usnombre"])){
+                if(!$objUsuario->cargar($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado'])){
+                    $objUsuario = null;
+                }
+            }else{
                 $objUsuario = null;
             }
         }
@@ -110,7 +114,7 @@ class c_usuario
 
     /**
      * permite buscar un objeto
-     * @param array $param
+     * @param $param
      * @return array
      */
     public function buscar($param = "")
@@ -118,7 +122,7 @@ class c_usuario
         $where = " true ";
         if ($param<>null) {
             if (isset($param)) {
-                $where.=" and idusuario ='".$param."'";
+                $where.=" and usnombre ='".$param."'";
             }
         }
         $objUsuario= new Usuario();
