@@ -130,7 +130,7 @@ class Usuario
 		$this->nombre = "";
 		$this->pass = "";
 		$this->mail = "";
-		$this->deshabilitado = "";
+		$this->deshabilitado = null;
 		$this->mensajeFuncion = "";
 	}
 

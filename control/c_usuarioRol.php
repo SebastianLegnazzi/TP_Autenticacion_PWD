@@ -96,12 +96,12 @@ class c_usuarioRol
      * @param array $param
      * @return array
      */
-    public function buscar($param)
+    public function buscar($param = "")
     {
         $where = " true ";
         if ($param<>null) {
-            if (isset($param['idusuario'])) {
-                $where.=" and idusuario ='".$param['idusuario']."'";
+            if (isset($param)) {
+                $where.=" and idusuario ='".$param."'";
             }
         }
         $objUsuarioRol= new UsuarioRol();
