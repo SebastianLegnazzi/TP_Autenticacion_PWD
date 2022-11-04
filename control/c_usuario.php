@@ -12,7 +12,6 @@ class c_usuario
     private function cargarObjeto($param)
     {
         $objUsuario = null;
-
         if (array_key_exists('idusuario', $param) and array_key_exists('usnombre', $param) and array_key_exists('uspass', $param) and array_key_exists('usmail', $param) and array_key_exists('usdeshabilitado', $param)) {
             $objUsuario = new Usuario();
             if(!$objUsuario->Buscar($param["usnombre"])){
