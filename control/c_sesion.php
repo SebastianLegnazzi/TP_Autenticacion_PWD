@@ -1,5 +1,4 @@
 <?php
-
 class c_sesion{
 
     private $objUsuario;       
@@ -45,7 +44,7 @@ class c_sesion{
         $objUsuarios = new c_usuario();
         $arrayUsuario = $objUsuarios->buscar($usuario);
         $resp = false;
-        if(count($arrayUsuario) == 1){
+        if($arrayUsuario != null){
             if($pass == $arrayUsuario[0]->getPass()){
                 $this->setObjUsuario($arrayUsuario[0]);
                 $arrayRoles = $this->getRol();
@@ -83,7 +82,6 @@ class c_sesion{
 
     public function cerrar(){
         session_destroy();   
-        header("Location: ../vista/index.php");
     }
 
 

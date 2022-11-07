@@ -1,6 +1,8 @@
 <?php
 include_once("../estructura/Cabecera.php");
 $metodo = data_submitted();
+$metodo["uspass"] = md5($metodo["uspass"]);
+$metodo["contraseñaRep"] = md5($metodo["contraseñaRep"]);
 $objUsuario = new c_usuario();
 if ($objUsuario->alta($metodo)) {
 ?>
@@ -29,7 +31,7 @@ if ($objUsuario->alta($metodo)) {
         })
 
         function redireccionarPagina() {
-            location.href = "registrarse.php"
+            location.href = "../sesion/registrarse.php"
         }
         setTimeout("redireccionarPagina()", 1450);
     </script>

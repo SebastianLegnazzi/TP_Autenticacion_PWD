@@ -4,7 +4,7 @@ include_once("../estructura/Cabecera.php");
 <script src="../js/validarContraseñaIguales.js"></script>
 <div class="container-fluid">
     <div class="container col-md-5 text-white">
-        <form action="accionRegistrarse.php" method="get" class="needs-validation row-md-4 mb-4" novalidate>
+        <form action="../accion/accionRegistrarse.php" method="get" class="needs-validation row-md-4 mb-4" novalidate>
             <div>
                 <label>Nombre: </label><input type="text" pattern="[a-zA-Z]+\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*" name="usnombre" minlength="3" id="input_nombre" class="form-control text" required>
                 <div class="invalid-feedback">
@@ -49,7 +49,7 @@ include_once("../estructura/Cabecera.php");
             </div>
             <input type="submit" name="boton_enviar" onclick="return verificarContraseñaIgual(document.getElementById('input_contraseña'), document.getElementById('input_contraseñaRep'))" class="btn btn-dark mt-2" id="boton_enviar" value="Cargar">
         </form>
-        <a href="IniciarSesion.php" class="link-warning">ya tengo cuenta</a>
+        <a href="login.php" class="link-info">ya tengo cuenta</a>
     </div>
 </div>
 <script src="../js/validarCamposVacios.js"></script>

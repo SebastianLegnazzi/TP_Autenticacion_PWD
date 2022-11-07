@@ -10,7 +10,7 @@ $PROYECTO ='PW/Autenticacion/TP_Autenticacion_PWD'; //Pone la ubicación de todo
 //variable que almacena el directorio del proyecto
 $ROOT =$_SERVER['DOCUMENT_ROOT']."/$PROYECTO/"; //Agarra la ubicación del servidor donde tiene guardada la carpeta
 
-include_once($ROOT.'Util/funciones.php'); //Trae las funciones del script funciones.php
+include_once($ROOT.'util/funciones.php'); //Trae las funciones del script funciones.php
 
 
 
@@ -23,7 +23,7 @@ $INICIO = "Location:http://".$_SERVER['HTTP_HOST']."/$PROYECTO/vista/login/login
 $PRINCIPAL = "Location:http://".$_SERVER['HTTP_HOST']."/$PROYECTO/index.php";
 
 
-$_SESSION['ROOT']=$ROOT; 
+$_COOKIE['ROOT']=$ROOT;                                 //CONSULTAR *1
 
 
 ?>

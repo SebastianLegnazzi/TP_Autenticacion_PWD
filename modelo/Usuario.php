@@ -147,11 +147,10 @@ class Usuario
 	{
 		$base = new BaseDatos();
 		$resp = false;
-		$consulta = "INSERT INTO usuario (idusuario, usnombre, uspass, usmail, usdeshabilitado) VALUES (
-        " . $this->getId() . ",
-		'" . $this->getNombre() . "')".",
-		'" . $this->getPass() . "')".",
-		'" . $this->getMail() . "')".",
+		$consulta = "INSERT INTO usuario (usnombre, uspass, usmail, usdeshabilitado) VALUES (
+		'" . $this->getNombre() . "',
+		'" . $this->getPass() . "',
+		'" . $this->getMail() . "',
 		'" . $this->getDeshabilitado() . "')";
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consulta)) {
@@ -191,19 +190,19 @@ class Usuario
 	/*
 	 Función que busca una auto en base a un usuario
 	*/
-	public function Buscar($usuario)
+	public function buscar($usuario)
 	{
 		$base = new BaseDatos();
 		$consulta = "SELECT * FROM usuario WHERE usnombre='" . $usuario . "'";
 		$resp = false;
 		if ($base->Iniciar()) {
 			if ($base->Ejecutar($consulta)) {
-				if ($rol = $base->Registro()) {
-					$this->setId($rol['idusuario']);
-					$this->setNombre($rol['usnombre']);
-					$this->setPass($rol['uspass']);
-					$this->setMail($rol['usmail']);
-					$this->setDeshabilitado($rol['usdeshabilitado']);
+				if ($usuario = $base->Registro()) {
+					$this->setId($usuario['idusuario']);
+					$this->setNombre($usuario['usnombre']);
+					$this->setPass($usuario['uspass']);
+					$this->setMail($usuario['usmail']);
+					$this->setDeshabilitado($usuario['usdeshabilitado']);
 					$resp = true;
 				}
 			} else {
@@ -229,7 +228,7 @@ class Usuario
 				$arregloUsuarios = array();
 				while ($usuario = $base->Registro()) {
 					$objUsuario = new Usuario();
-					$objUsuario->Buscar($usuario['idusuario']);
+					$objUsuario->Buscar($usuario['usnombre']);
 					array_push($arregloUsuarios, $objUsuario);
 				}
 			} else {

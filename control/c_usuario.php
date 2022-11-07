@@ -2,8 +2,6 @@
 class c_usuario
 {
     //Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
-
-
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
      * @param array $param
@@ -12,12 +10,10 @@ class c_usuario
     private function cargarObjeto($param)
     {
         $objUsuario = null;
-        if (array_key_exists('idusuario', $param) and array_key_exists('usnombre', $param) and array_key_exists('uspass', $param) and array_key_exists('usmail', $param) and array_key_exists('usdeshabilitado', $param)) {
+        if (array_key_exists('idusuario', $param) and array_key_exists('usnombre', $param) and array_key_exists('uspass', $param) and array_key_exists('usmail', $param)) {
             $objUsuario = new Usuario();
-            if(!$objUsuario->Buscar($param["usnombre"])){
-                if(!$objUsuario->cargar($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado'])){
-                    $objUsuario = null;
-                }
+            if(!$objUsuario->buscar($param["usnombre"])){
+                $objUsuario->cargar($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], null);
             }else{
                 $objUsuario = null;
             }
@@ -34,9 +30,9 @@ class c_usuario
     {
         $objUsuario = null;
 
-        if (isset($param['idusuario'])) {
+        if (isset($param['usnombre'])) {
             $objUsuario = new Usuario();
-            $objUsuario->buscar($param['idusuario']);
+            $objUsuario->buscar($param['usnombre']);
         }
         return $objUsuario;
     }
@@ -51,7 +47,7 @@ class c_usuario
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idusuario'])) {
+        if (isset($param['idusuario']) || isset($param['usnombre']) ) {
             $resp = true;
         }
         return $resp;
@@ -104,7 +100,7 @@ class c_usuario
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objtUsuario = $this->cargarObjeto($param);
-            if ($objtUsuario!=null and $objtUsuario->modificar()) {
+            if ($objtUsuario!=null && $objtUsuario->modificar()) {
                 $resp = true;
             }
         }

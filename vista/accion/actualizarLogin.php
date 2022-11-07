@@ -2,22 +2,22 @@
 include_once("../estructura/Cabecera.php");
 $metodo = data_submitted();
 $objUsuario = new c_usuario();
-$datosUsuario = $objUsuario->buscar($metodo);
+$datosPersona = $objUsuario->buscar($metodo["usnombre"]);
 ?>
 <div class="container-fluid">
     <div class="container col-md-5 text-white">
         <?php
-        if ($datosUsuario != null) {
+        if ($datosPersona != null) {
         ?>
-            <form action="actualizarDatosPersona.php" method="get" class="needs-validation" novalidate>
+            <form action="accionActualizarLogin.php" method="get" class="needs-validation" novalidate>
                 <div>
                     <label class="mt-3">ID: </label><input type="text" name="idusuario" id="idusuario" class="form-control" value="<?php echo $datosPersona[0]->getId() ?>" disabled>
                     <div class="d-none">
-                        <input type="text" name="usnombre" id="usnombre" class="form-control" value="<?php echo $datosPersona[0]->getId() ?>">
+                        <input type="text" name="idusuario" id="idusuario" class="form-control" value="<?php echo $datosPersona[0]->getId() ?>">
                     </div>
                 </div>
                 <div>
-                    <label class="mt-3">Nombre: </label><input type="text" name="Nombre" id="Nombre" class="form-control" required value="<?php echo $datosPersona[0]->getNombre() ?>" pattern="[a-zA-Z]+\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*">
+                    <label class="mt-3">Nombre: </label><input type="text" name="usnombre" id="usnombre" class="form-control" required value="<?php echo $datosPersona[0]->getNombre() ?>" pattern="[a-zA-Z]+\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*\s?[a-zA-Z]*">
                     <div class="invalid-feedback">
                         Porfavor ingrese un nombre valido!
                     </div>
@@ -44,14 +44,14 @@ $datosUsuario = $objUsuario->buscar($metodo);
                     </div>
                 </div>
                 <div class="mt-2">
-                    <a href="buscarPersona.php" class="btn btn-dark">Volver</a>
+                    <a href="listarUsuario.php" class="btn btn-dark">Volver</a>
                     <button type="submit" class="btn btn-dark">Modificar</button>
                 </div>
             </form>
         <?php
         } else {
             echo ' <p class="lead text-danger">La persona ingresada no existe en la base de datos!</p>';
-            echo '<a href="buscarPersona.php" class="btn btn-dark">Volver</a>';
+            echo '<a href="listarUsuario.php" class="btn btn-dark">Volver</a>';
         }
         ?>
 
